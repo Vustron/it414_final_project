@@ -7,7 +7,8 @@
         "DATABASE_URL",
         "NEXT_PUBLIC_PUBLIC_KEY",
         "NEXT_PUBLIC_URL_ENDPOINT",
-        "PRIVATE_KEY"
+        "PRIVATE_KEY",
+        "PEPPER"
       ],
       "inputs": [
         "$TURBO_DEFAULT$",
