@@ -1,6 +1,6 @@
 // utils
-import { fileURLToPath } from "node:url"
 import withBundleAnalyzer from "@next/bundle-analyzer"
+import { fileURLToPath } from "node:url"
 import createJiti from "jiti"
 
 // configure the bundle analyzer
@@ -86,6 +86,7 @@ export const securityHeaders = [
 const nextConfig = {
   // experimental
   experimental: {
+    serverComponentsExternalPackages: ["@node-rs/argon2"],
     // caching
     staleTimes: {
       dynamic: 0,
@@ -149,6 +150,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "api.microlink.io",
+      },
+      {
+        protocol: "https",
+        hostname: "ik.imagekit.io",
       },
     ],
   },

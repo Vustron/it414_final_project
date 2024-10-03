@@ -1,68 +1,42 @@
-"use client"
-
 // components
-import SubmitButton from "@/components/shared/submit-button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
-// utils
-import { httpRequest } from "@/lib/config/http"
-import { clientErrorHandler, createUniqueId } from "@/lib/utils"
-import toast from "react-hot-toast"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import BounceWrapper from "@/components/shared/bounce"
+import HomeClient from "@/components/home/client"
 
 // types
-import type { RequestHelloWorld } from "@/lib/types"
+import type { Metadata } from "next"
 
-export default function RootPage() {
-  // example api hander
-  const getHelloWorld = async () => {
-    try {
-      const data = await httpRequest<RequestHelloWorld, RequestHelloWorld>(
-        "hello",
-        "GET",
-      )
-      return { data }
-    } catch (error) {
-      return Promise.reject(clientErrorHandler(error))
-    }
-  }
+// meta data
+export const metadata: Metadata = {
+  title: "Home | IT414 Final Project",
+  description: "Welcome to the IT414 Final Project dashboard",
+}
 
-  const handleGetHelloWorld = async () => {
-    await toast.promise(getHelloWorld(), {
-      loading: <span className="animate-pulse">Fetching...</span>,
-      success: (result) => JSON.stringify(result.data.message),
-      error: (error: unknown) => clientErrorHandler(error),
-    })
-  }
-
+export default async function RootPage() {
   return (
-    <main className="m-auto flex size-full flex-col items-center justify-center">
-      <h1 className="my-6 text-3xl font-bold">
-        NextJS Template w/ Custom Toast, Shadcn-ui, and React Query
-      </h1>
+    <BounceWrapper>
+      <main className="relative min-h-screen w-full bg-gradient-to-b from-background to-muted/20">
+        <div className="container mx-auto px-4 py-16">
+          <Card className="mx-auto max-w-[35rem]">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
+                    IT414{" "}
+                    <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                      Final Project
+                    </span>
+                  </h1>
+                </div>
+              </div>
+            </CardHeader>
 
-      <div className="flex flex-row items-center justify-center">
-        <h3 className="mb-6 text-lg font-semibold">Made by Vustron</h3>
-        <Avatar className="mb-6 ml-4">
-          <AvatarImage src="/images/vustron.png" />
-          <AvatarFallback>
-            <h3 className="text-2xl font-semibold">Vustron</h3>
-          </AvatarFallback>
-        </Avatar>
-      </div>
-
-      <div className="flex flex-row gap-5">
-        <SubmitButton
-          title="Toast"
-          onClick={handleGetHelloWorld}
-          buttonClassName="hover:bg-blue-600"
-        />
-
-        <SubmitButton
-          title="Random Id"
-          onClick={() => toast.success(createUniqueId())}
-          buttonClassName="hover:bg-blue-600"
-        />
-      </div>
-    </main>
+            <CardContent>
+              <HomeClient />
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+    </BounceWrapper>
   )
 }

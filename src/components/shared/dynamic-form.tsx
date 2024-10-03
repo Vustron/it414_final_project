@@ -1,20 +1,21 @@
 // components
-import SubmitButton from "@/components/shared/submit-button"
-import { FloatingLabelInput } from "@/components/ui/floating-label-input"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form"
 import {
   Select,
-  SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectValue,
+  SelectTrigger,
+  SelectContent,
 } from "@/components/ui/select"
+import {
+  Form,
+  FormItem,
+  FormField,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form"
+import { FloatingLabelInput } from "@/components/ui/floating-label-input"
+import PasswordStrengthMeter from "@/components/ui/password-strength"
+import SubmitButton from "@/components/shared/submit-button"
 
 // utils
 import { cn } from "@/lib/utils"
@@ -31,6 +32,7 @@ const DynamicForm = <TFieldValues extends FieldValues>({
   mutation,
   className,
   disabled,
+  isRegister,
   submitButtonClassname,
   submitButtonTitleClassname,
 }: DynamicFormProps<TFieldValues>) => {
@@ -73,22 +75,35 @@ const DynamicForm = <TFieldValues extends FieldValues>({
                       </SelectContent>
                     </Select>
                   ) : (
-                    <FloatingLabelInput
-                      {...formField}
-                      id={field.name}
-                      type={field.type}
-                      label={field.label}
-                      placeholder={field.placeholder}
-                      disabled={mutation?.isPending}
-                      hasErrors={!!form.formState.errors[field.name]}
-                      className={cn(
-                        form.formState.errors[field.name]
-                          ? "border-red-600 focus:ring-0"
-                          : "",
-                        field.className,
-                      )}
-                      isPassword={field.type === "password"}
-                    />
+                    <>
+                      <FloatingLabelInput
+                        {...formField}
+                        id={field.name}
+                        type={field.type}
+                        label={field.label}
+                        placeholder={field.placeholder}
+                        disabled={mutation?.isPending || disabled}
+                        hasErrors={!!form.formState.errors[field.name]}
+                        className={cn(
+                          form.formState.errors[field.name]
+                            ? "border-red-600 focus:ring-0"
+                            : "",
+                          field.className,
+                        )}
+                        isPassword={field.type === "password"}
+                      />
+                      {isRegister &&
+                        field.type === "password" &&
+                        field.name !== "cpassword" && (
+                          <PasswordStrengthMeter
+                            password={
+                              formField.value
+                                ? String(formField.value)
+                                : undefined
+                            }
+                          />
+                        )}
+                    </>
                   )}
                 </FormControl>
                 <FormMessage />

@@ -1,8 +1,9 @@
 // components
 import ProgressBarProvider from "@/components/providers/progress-bar"
+import ImagekitProvider from "@/components/providers/imagekit"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import QueryProvider from "@/components/providers/query"
 import ToastProvider from "@/components/providers/toast"
-import { TooltipProvider } from "@/components/ui/tooltip"
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,7 +11,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       <QueryProvider>
         <ProgressBarProvider>
           <ToastProvider />
-          {children}
+          <ImagekitProvider>{children}</ImagekitProvider>
         </ProgressBarProvider>
       </QueryProvider>
     </TooltipProvider>

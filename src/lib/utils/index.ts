@@ -107,7 +107,7 @@ export const dataSerializer = <T>(data: T): T => {
 // data sanitizer
 export const sanitizer = <T>(
   data: unknown,
-  schema: z.ZodObject<z.ZodRawShape>,
+  schema: z.ZodEffects<z.ZodObject<any>> | z.ZodObject<any>,
   purify: DOMPurify.DOMPurifyI,
 ): T => {
   // Sanitize each field of the object
@@ -121,7 +121,7 @@ export const sanitizer = <T>(
         if (Array.isArray(obj)) {
           return obj.map((item) => sanitizeObject(item))
         }
-        return Object.keys(obj).reduce(
+        return Object.keys(obj as object).reduce(
           (acc, key) => {
             acc[key] = sanitizeObject((obj as Record<string, unknown>)[key])
             return acc

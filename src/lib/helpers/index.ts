@@ -1,42 +1,14 @@
-// route controllers
-import { helloController } from "@/lib/controllers/hello"
-
 // utils
 import { ErrorHandler } from "@/lib/utils"
 import { NextResponse } from "next/server"
+import { routes } from "@/lib/routes"
 
 // types
 import type { ErrorResponseData } from "@/lib/types"
+import type { HttpMethod } from "@/lib/routes"
 import type { NextRequest } from "next/server"
 
 /**------------------util non async functions ------------------**/
-
-// types
-type HttpMethod = "GET" | "POST" | "PATCH" | "DELETE"
-
-interface Route {
-  path: string
-  handler: (request: NextRequest) => Promise<NextResponse>
-}
-
-const routes: Record<HttpMethod, Route[]> = {
-  GET: [
-    { path: "/api/v1/hello", handler: helloController },
-    // Add more GET routes here
-  ],
-  POST: [
-    // { path: '/api/v1/auth/login-account', handler: loginAccountControl },
-    // Add more POST routes here
-  ],
-  PATCH: [
-    // { path: '/api/v1/auth/update-account', handler: updateAccountControl },
-    // Add more PATCH routes here
-  ],
-  DELETE: [
-    // { path: '/api/v1/auth/delete-account', handler: deleteAccountControl },
-    // Add more DELETE routes here
-  ],
-}
 
 // api request handler
 export async function handleRequest(

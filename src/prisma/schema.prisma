@@ -1,0 +1,45 @@
+// format shift + alt + f
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// user model
+model User {
+  id                    String         @id
+  username              String         @unique
+  email                 String?        @unique
+  passwordHash          String?
+  salt                  String?
+  avatarUrl             String?
+  userType              UserType
+  sessions              Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+// session model
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@map("sessions")
+}
+
+// enum for user type
+enum UserType {
+  ADMIN
+  USER
+}
