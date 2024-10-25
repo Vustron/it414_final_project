@@ -40,5 +40,5 @@ jobs:
           project: "vustronus-it414-midterm"
           entrypoint: "jsr:@deno/nextjs-start"
           root: "."
-          include: .next, public
+          
           
