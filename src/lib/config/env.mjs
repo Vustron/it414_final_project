@@ -12,15 +12,15 @@ export const env = createEnv({
   },
   // server env
   server: {
-    DATABASE_URL: z.string().url(),
-    PEPPER: z.string(),
-    PRIVATE_KEY: z.string(),
+    DATABASE_URL: z.string().url().optional(),
+    PEPPER: z.string().optional(),
+    PRIVATE_KEY: z.string().optional(),
   },
   // client env
   client: {
-    NEXT_PUBLIC_APP_URL: z.string().url(),
-    NEXT_PUBLIC_PUBLIC_KEY: z.string(),
-    NEXT_PUBLIC_URL_ENDPOINT: z.string().url(),
+    NEXT_PUBLIC_APP_URL: z.string().url().optional(),
+    NEXT_PUBLIC_PUBLIC_KEY: z.string().optional(),
+    NEXT_PUBLIC_URL_ENDPOINT: z.string().url().optional(),
   },
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,

@@ -21,6 +21,11 @@ export async function imagekitAuthController(request: NextRequest) {
     const expire =
       searchParams.get("expire") ||
       (Math.floor(Date.now() / 1000) + 2400).toString()
+
+    if (!privateKey) {
+      throw new Error("PRIVATE_KEY is not defined")
+    }
+
     const privateAPIKey = privateKey
     const signature = crypto
       .createHmac("sha1", privateAPIKey)
